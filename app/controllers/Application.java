@@ -1,6 +1,5 @@
 package controllers;
 
-import play.*;
 import play.mvc.*;
 import org.apache.commons.io.*;
 
@@ -10,7 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
@@ -69,10 +67,10 @@ public class Application extends Controller {
         }else if (effect.equals("sketch")){
             grayscale(image);
             partial_differential(image);
-        }else if (effect.equals("test")){
-            newfilter(image);
+        }else if (effect.equals("vintage")){
+            vintage(image);
         }else{
-            return badRequest("You can't just make up effect name. '"+effect+"' is not supported.");
+            return badRequest("You can't just make up effect names. '"+effect+"' is not supported.");
         }
 
         String processedFileName = pathHash+"_"+effect+".png";
@@ -89,18 +87,19 @@ public class Application extends Controller {
         return ok(mirror.render(effect,"processed_images/" + processedFileName));
     }
 
-    private static void newfilter(BufferedImage image) {
+    private static void vintage(BufferedImage image) {
         for (int i=0;i<image.getWidth();i++){
             for (int j=0;j<image.getHeight();j++){
                 Color c = new Color(image.getRGB(i,j));
                 int g = c.getGreen();
                 int b = c.getBlue();
                 int r = c.getRed();
-                g = (int) (1.3 * g);
-                b = (int) (1.1 * b);
-                r = (int) (0.6 * r);
+                g = (int) (1.6 * g);
+                b = (int) (0.4 * b);
+                r = (int) (1.6 * r);
                 g = g > 255 ? 255 : g;
                 b = b > 255 ? 255 : b;
+                r = r > 255 ? 255 : r;
                 Color newc = new Color(r,g,b);
                 int newrgb = newc.getRGB();
                 image.setRGB(i,j,newrgb);
