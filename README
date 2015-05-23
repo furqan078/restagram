@@ -1,4 +1,3 @@
-This is your new Play application
-=====================================
+A REST API to apply image filters.
 
-This file will be packaged with your application, when using `play dist`.
+Developed using the Play framework, version: 2.2.6
